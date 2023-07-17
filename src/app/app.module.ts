@@ -27,6 +27,11 @@ import { ItemTableComponent } from './itemDetails/item-table/item-table.componen
 import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { NgChartsModule } from 'ng2-charts';
+import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
+import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -36,6 +41,9 @@ import { MatSortModule } from '@angular/material/sort';
     ItemDashboardComponent,
     NavigationComponent,
     ItemTableComponent,
+    PieChartComponent,
+    DoughnutChartComponent,
+    BarChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +63,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    NgChartsModule,
+    FontAwesomeModule,
   ],
   providers: [
     {

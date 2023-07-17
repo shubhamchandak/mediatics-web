@@ -62,3 +62,7 @@ th.mat-sort-header-sorted {
   background-position: center center;
   background-size: cover;
 }
+
+.mat-header-cell {
+  z-index: 0 !important;
+}

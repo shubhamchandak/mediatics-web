@@ -1,13 +1,5 @@
 .grid-container {
-  margin: 20px;
-}
-
-.dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  margin: 0px;
 }
 
 .more-button {
@@ -18,4 +10,34 @@
 
 .dashboard-card-content {
   text-align: center;
+  height: 100%;
+  margin-top: -3%;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+}
+
+.performanceStats {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.performanceStats > div {
+  background-color: #f1f1f1;
+  margin: 6%;
+  margin-top: 8%;
+  padding: 10%;
+  font-size: 40px;
+  padding-left: 15%;
+  padding-right: 15%
 }

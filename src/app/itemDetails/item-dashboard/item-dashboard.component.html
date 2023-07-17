@@ -1,6 +1,5 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
+  <mat-grid-list cols="3" rowHeight="350px">
     <mat-grid-tile
       *ngFor="let card of cards | async"
       [colspan]="card.cols"
@@ -25,10 +24,34 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+          <!-- <div>Card Content Here </div> -->
+          <ng-container *ngIf="getChartType(card.title) != 'performanceStats'; else performanceStats">
+          </ng-container>
+          <app-pie-chart *ngIf="getChartType(card.title) == 'pieChart'" [dataSource]="dashboardCardMappings[card.title]['dataSource']"></app-pie-chart>
+          <app-doughnut-chart *ngIf="getChartType(card.title) == 'doughnutChart'" [dataSource]="dashboardCardMappings[card.title]['dataSource']"></app-doughnut-chart>
+          <app-bar-chart *ngIf="getChartType(card.title) == 'barChart'" [dataSource]="dashboardCardMappings[card.title]['dataSource']"></app-bar-chart>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+<ng-template #performanceStats>
+  <div class="performanceStats">
+    <div>
+      <fa-icon [icon]="faHeart" style="font-size:3em; color: #ff6384;"></fa-icon>
+      <!-- <i class="fa-solid fa-heart" style="color: #cb4d4d;"></i> -->
+      <h3>Likes</h3>
+      <span>{{ numOfLikes | number:'1.0':'en-US'}} </span>
+    </div>
+    <div>
+      <fa-icon [icon]="faComments" style="font-size:3em; color: #36a2eb;"></fa-icon>
+      <!-- <i class="fa-solid fa-heart" style="color: #cb4d4d;"></i> -->
+      <h3>Comments</h3>
+      <span>{{ numOfComments | number:'1.0':'en-US'}} </span>
+    </div>
+    <div>3dsfds</div>  
+  </div>
+</ng-template>
+
 <app-item-table></app-item-table>

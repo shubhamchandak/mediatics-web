@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    image: frontend
+    container_name: frontend
+    ports:
+      - 4200:4200
+    volumes:
+      - .:/app

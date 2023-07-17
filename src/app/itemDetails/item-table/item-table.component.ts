@@ -45,11 +45,16 @@ export class ItemTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataService.getData().subscribe((data) => {
+    this.dataService.getCommentsAnalytics().subscribe({
+      next: (data) => {
       //this.data = data;
       this.dataSource.data = data as any[];
       console.log(data);
-    });
+    },
+    error: error => {
+      console.log(error);
+    }
+  });
   }
 
   addColumn() {
