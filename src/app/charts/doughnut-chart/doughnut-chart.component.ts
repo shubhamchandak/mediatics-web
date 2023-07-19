@@ -43,7 +43,7 @@ export class DoughnutChartComponent implements OnInit {
       datasets: [
         { 
           data: this.dataSource.map(x => x.value),
-          backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+          backgroundColor: ['#36a2eb', '#ff6384', '#cc65fe', '#ffce56',]
         },
       ]
     };

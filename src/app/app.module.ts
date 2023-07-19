@@ -32,6 +32,15 @@ import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ItemTableContentComponent } from './itemDetails/item-table-content/item-table-content.component';
+import { TableModule } from 'primeng/table'
+import { MultiSelectModule } from 'primeng/multiselect'
+import { SliderModule } from 'primeng/slider'
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { ProgressBarModule } from 'primeng/progressbar'
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +53,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PieChartComponent,
     DoughnutChartComponent,
     BarChartComponent,
+    ItemTableContentComponent,
+    ItemSummaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +76,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatSortModule,
     NgChartsModule,
     FontAwesomeModule,
+    FormsModule,
+    TableModule,
+    MultiSelectModule,
+    SliderModule,
+    DropdownModule,
+    ProgressBarModule,
+    ProgressSpinnerModule
   ],
   providers: [
     {

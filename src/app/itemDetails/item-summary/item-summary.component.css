@@ -1,0 +1,41 @@
+.grid-container {
+    margin: 0px;
+  }
+  
+  .more-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+  }
+  
+  .dashboard-card-content {
+    text-align: center;
+    height: 100%;
+    margin-top: -3%;
+  }
+  
+  .dashboard-card {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+  }
+  
+  ul {
+    list-style-type: square;
+    text-align: left;
+    margin-bottom: 25px;
+    font-size: medium;
+  }
+  li {
+    padding: 5px;
+    margin-top: 5px;
+  }
+  
+  h3 {
+    font-style: italic;
+  }
+  

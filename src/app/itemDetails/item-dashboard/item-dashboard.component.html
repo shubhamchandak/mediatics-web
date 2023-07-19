@@ -1,5 +1,5 @@
 <div class="grid-container">
-  <mat-grid-list cols="3" rowHeight="350px">
+  <mat-grid-list cols="3" rowHeight="425px">
     <mat-grid-tile
       *ngFor="let card of cards | async"
       [colspan]="card.cols"
@@ -25,8 +25,76 @@
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
           <!-- <div>Card Content Here </div> -->
-          <ng-container *ngIf="getChartType(card.title) != 'performanceStats'; else performanceStats">
+          <ng-container *ngIf="getChartType(card.title) == 'textSummary'">
+            <div style="margin-top: 5%; margin-right: 5%;">
+              <h3>Request for specific topics:</h3>
+              <ul>
+                <li>
+                  Can you make a video about time management strategies?"
+                </li>
+                <li>
+                  I'd love to see a video on effective study techniques!
+                </li>
+                <li>
+                  Could you do a video on personal finance tips for beginners?
+                </li>
+              </ul>
+              <h3>Advice on content strategy:</h3>
+              <ul>
+                <li>
+                  You should try incorporating more vlogs into your content. It would add a personal touch!
+                </li>
+                <li>
+                  Experiment with different video lengths and see what works best for engagement.
+                </li>
+                <li>
+                  Consider jumping on the latest trends and challenges to attract a wider audience.
+                </li>
+              </ul>
+              <h3>
+                Desire for more storytelling:
+              </h3>
+              <ul>
+                <li>
+                  I love the storytelling in your videos! Keep it up, it's what sets you apart.
+                </li>
+                <li>
+                  Your storytelling skills are incredible. I look forward to each new video for the captivating narratives.
+                </li>
+                <li>
+                  Your storytelling ability makes your content so engaging. Don't stop telling those stories!
+                </li>
+              </ul>
+              <h3>
+                Expectation of consistency:
+              </h3>
+              <ul>
+                <li>
+                  Your videos are amazing! Can't wait for the next one. Please upload more frequently!
+                </li>
+                <li>
+                  Love your content. Would be great if you could establish a regular upload schedule.
+                </li>
+                <li>
+                  Your videos always make my day. I hope you continue to post consistently!
+                </li>
+              </ul>
+            </div>
           </ng-container>
+          <div *ngIf="getChartType(card.title) == 'performanceStats'" class="performanceStats">
+            <div>
+              <fa-icon [icon]="faHeart" style="font-size:3em; color: #ff6384;"></fa-icon>
+              <!-- <i class="fa-solid fa-heart" style="color: #cb4d4d;"></i> -->
+              <h3>Likes</h3>
+              <span>{{ numOfLikes | number:'1.0':'en-US'}} </span>
+            </div>
+            <div>
+              <fa-icon [icon]="faComments" style="font-size:3em; color: #36a2eb;"></fa-icon>
+              <!-- <i class="fa-solid fa-heart" style="color: #cb4d4d;"></i> -->
+              <h3>Comments</h3>
+              <span>{{ numOfComments | number:'1.0':'en-US'}} </span>
+            </div>
+          </div>
           <app-pie-chart *ngIf="getChartType(card.title) == 'pieChart'" [dataSource]="dashboardCardMappings[card.title]['dataSource']"></app-pie-chart>
           <app-doughnut-chart *ngIf="getChartType(card.title) == 'doughnutChart'" [dataSource]="dashboardCardMappings[card.title]['dataSource']"></app-doughnut-chart>
           <app-bar-chart *ngIf="getChartType(card.title) == 'barChart'" [dataSource]="dashboardCardMappings[card.title]['dataSource']"></app-bar-chart>
@@ -35,6 +103,10 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+<ng-template #textSummary>
+
+</ng-template>
 
 <ng-template #performanceStats>
   <div class="performanceStats">
@@ -50,8 +122,5 @@
       <h3>Comments</h3>
       <span>{{ numOfComments | number:'1.0':'en-US'}} </span>
     </div>
-    <div>3dsfds</div>  
   </div>
 </ng-template>
-
-<app-item-table></app-item-table>

@@ -1,1 +1,15 @@
-<p>dashboard works! Reallly?</p>
+<div class="wrap">
+    <h1 style="display: block; margin-bottom: 20%;">
+        You create content, we drive the user engagement!
+    </h1>
+    <div class="search">
+       <input type="text" class="searchTerm" placeholder="Input Youtube video URL and hit Search!">
+       <button type="submit" class="searchButton" (click)="submit()">
+         <fa-icon [icon]="faSearch" class="fa fa-search"></fa-icon>
+      </button>
+    </div>
+    <div style="margin-top: 20px; font-style: italic;">
+        <span *ngIf="showSpinner">AI is working on your analysis....getting your reports...</span>
+    </div>
+     </div>
+

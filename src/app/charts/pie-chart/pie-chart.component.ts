@@ -39,10 +39,11 @@ export class PieChartComponent implements OnInit {
   ngOnInit(): void {
     this.pieChartLabels = this.dataSource.map(x => x.key);
     this.pieChartDatasets = {
+      labels: this.dataSource.map(x => x.key),
       datasets: [
         {
           data: this.dataSource.map(x => x.value),
-          backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+          backgroundColor: ['#36a2eb', '#ffce56', '#ff6384', '#cc65fe'],
         }
       ]
     }

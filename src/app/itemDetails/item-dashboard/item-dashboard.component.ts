@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DataService } from 'src/app/services/data.service';
 import { ChartDataSource } from 'src/app/model';
-import { faHeart, faComments, faHeartbeat, faHeartPulse, faHeartCircleCheck, faHeartMusicCameraBolt, faShieldHeart, faGrinHearts } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faHeartPulse } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-item-dashboard',
@@ -18,17 +18,19 @@ export class ItemDashboardComponent implements OnInit{
         console.log('hello');
         return [
           { title: 'Performance', cols: 1, rows: 1 },
-          { title: 'Sentiments', cols: 1, rows: 1 },
           { title: 'Intents', cols: 1, rows: 1 },
+          { title: 'TextSummary', cols: 1, rows: 2},
+          { title: 'Sentiments', cols: 1, rows: 1 },
           { title: 'Offenses', cols: 1, rows: 1 },
         ];
       }
 
       return [
-        { title: 'Performance', cols: 2, rows: 1 },
-        { title: 'Sentiments', cols: 1, rows: 1 },
-        { title: 'Intents', cols: 1, rows: 2 },
-        { title: 'Offenses', cols: 1, rows: 1 },
+        { title: 'Performance', cols: 1, rows: 1 },
+        { title: 'Intents', cols: 1, rows: 1 },
+        { title: 'TextSummary', cols: 1, rows: 2},
+        { title: 'Sentiments', cols: 1, rows: 2 },
+        { title: 'Offenses', cols: 1, rows: 2 },
       ];
     })
   );
@@ -48,18 +50,7 @@ export class ItemDashboardComponent implements OnInit{
   ngOnInit(): void {
     this.dataService.getItemDashboardData().subscribe({
       next: data => {
-        console.log(data);
-        this.numOfLikes = 23424;
-        this.numOfComments = 1832;
-        this.sentimentData = Object.keys(data["sentiment_count"]).map(x =>  ({ key: x, value: data["sentiment_count"][x] }));
-        this.offensiveData = Object.keys(data["offensive_count"]).map(x =>  ({ key: x, value: data["offensive_count"][x] }));
-        this.intentData = Object.keys(data["intent_count"]).map(x =>  ({ key: x, value: data["intent_count"][x] }));
-        this.dashboardCardMappings = {
-          Sentiments: { type: 'pieChart', dataSource: this.sentimentData },
-          Intents: { type: 'barChart', dataSource: this.intentData },
-          Offenses: { type: 'doughnutChart', dataSource: this.offensiveData},
-          Performance: { type: 'performanceStats', }
-        }
+        setTimeout(() => this.populateData(data), 500);
       },
       error: error => {
         console.log(error);
@@ -67,10 +58,28 @@ export class ItemDashboardComponent implements OnInit{
     })
   }
 
+  populateData(data) {
+    console.log(data);
+    this.numOfLikes = 22124;
+    this.numOfComments = 736;
+    this.sentimentData = Object.keys(data["sentiment_count"]).map(x =>  ({ key: x, value: data["sentiment_count"][x] }));
+    this.offensiveData = Object.keys(data["offensive_count"]).map(x =>  ({ key: x, value: data["offensive_count"][x] }));
+    this.intentData = Object.keys(data["intent_count"]).map(x =>  ({ key: x, value: data["intent_count"][x] }));
+    this.dashboardCardMappings = {
+      Sentiments: { type: 'pieChart', dataSource: this.sentimentData },
+      Intents: { type: 'barChart', dataSource: this.intentData },
+      Offenses: { type: 'doughnutChart', dataSource: this.offensiveData},
+      Performance: { type: 'performanceStats', },
+      TextSummary: {type: 'textSummary'}
+    }
+  }
+
   getChartType(title: string) {
     if (this.dashboardCardMappings && this.dashboardCardMappings[title] && this.dashboardCardMappings[title]['type']) {
+      console.log("getChartType: ", this.dashboardCardMappings[title]['type'])
       return this.dashboardCardMappings[title]['type'];
     }
+    console.log("getChartType: ''")
     return "";
   }
 

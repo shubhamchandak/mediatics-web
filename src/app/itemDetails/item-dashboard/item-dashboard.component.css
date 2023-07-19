@@ -35,9 +35,23 @@
 .performanceStats > div {
   background-color: #f1f1f1;
   margin: 6%;
-  margin-top: 8%;
+  margin-top: 15%;
   padding: 10%;
   font-size: 40px;
   padding-left: 15%;
   padding-right: 15%
+}
+
+ul {
+  list-style-type: square;
+  text-align: left;
+  margin-bottom: 25px;
+  font-size: medium;
+}
+li {
+  padding: 3px;
+}
+
+h3 {
+  font-style: italic;
 }
