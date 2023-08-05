@@ -41,6 +41,7 @@ import { FormsModule } from '@angular/forms';
 import { ProgressBarModule } from 'primeng/progressbar'
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,7 @@ import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.co
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '703607450466-ghq3f5gva3t5j8itjsplkl4cufdtdmrj.apps.googleusercontent.com'
+              '841355690055-kbh38gpf8c04bk8v6dd6amh50cpsqqpf.apps.googleusercontent.com'
             ),
           },
         ],
@@ -102,6 +103,7 @@ import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.co
         },
       } as SocialAuthServiceConfig,
     },
+    CookieService
   ],
   bootstrap: [AppComponent],
 })
