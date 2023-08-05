@@ -5,15 +5,20 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DataService {
-  baseUrl: string = 'http://localhost:8000/';
+  baseUrl: string = '/api';
+
 
   constructor(private http: HttpClient) {}
 
   getCommentsAnalytics() {
-    return this.http.get(this.baseUrl + "getCommentsAnalytics");
+    return this.http.get(this.baseUrl + "/getCommentsAnalytics");
   }
 
   getItemDashboardData() {
-    return this.http.get(this.baseUrl + "getItemDashboardData")
+    return this.http.get(this.baseUrl + "/getItemDashboardData");
+  }
+
+  getData() {
+    return this.http.get(this.baseUrl);
   }
 }

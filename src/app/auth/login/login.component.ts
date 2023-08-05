@@ -6,6 +6,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,15 +21,24 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: SocialAuthService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {
     this.authService.authState.subscribe((user) => {
+      console.log(user);
       this.userService.setUser(user);
       this.user = this.userService.getUser();
       this.loggedIn = user != null;
-      this.router.navigate(['dashboard']);
+      if(this.loggedIn) {
+        console.log("id_token: ", this.user.idToken);
+        this.cookieService.set("id_token", this.user.idToken);
+        this.router.navigate(['home']);
+      } else {
+        this.cookieService.delete("id_token");
+        this.router.navigate(['login']);
+      }
     });
   }
 

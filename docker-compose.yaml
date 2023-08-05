@@ -8,3 +8,10 @@ services:
       - 4200:4200
     volumes:
       - .:/app
+    networks:
+      - web_proxynet
+
+networks:
+  web_proxynet:
+    external:
+      name: shared_network
