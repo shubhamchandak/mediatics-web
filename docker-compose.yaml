@@ -1,9 +1,14 @@
 version: '3.8'
 services:
   web:
-    build: .
-    image: frontend
-    container_name: frontend
+    build:
+      context: .
+      target: dev # Use the development build stage
+    image: web-client
+    container_name: web-client
+    expose:
+      - 4200
+    command: ["npm", "start"]
     ports:
       - 4200:4200
     volumes:
