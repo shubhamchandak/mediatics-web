@@ -34,6 +34,12 @@ export class LoginComponent implements OnInit {
       if(this.loggedIn) {
         console.log("id_token: ", this.user.idToken);
         this.cookieService.set("id_token", this.user.idToken);
+        const currentHost = window.location.host;
+        const hostParts = currentHost.split(".");
+        if(hostParts.length > 1) {
+          this.cookieService.set("domain", `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`);
+        }
+        console.log("cookies: ", this.cookieService.getAll());
         this.router.navigate(['home']);
       } else {
         this.cookieService.delete("id_token");

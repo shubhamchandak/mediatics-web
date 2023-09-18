@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
     this.dataService.getUserVideos().subscribe({
       next: (data) => {
         this.userVideos = data;
-        console.log(this.userVideos);
       },
       error: (err) => {
         console.log("api error: ", err);
@@ -56,7 +55,6 @@ export class DashboardComponent implements OnInit {
   }
 
   dashboardClick(videoDetails: IVideoDetails) {
-    console.log('click click click', videoDetails);
     this.dataService.loadVideo(videoDetails);
     this.router.navigate(['item-dashboard']);
   }
