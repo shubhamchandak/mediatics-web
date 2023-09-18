@@ -33,13 +33,13 @@ export class LoginComponent implements OnInit {
       this.loggedIn = user != null;
       if(this.loggedIn) {
         console.log("id_token: ", this.user.idToken);
-        this.cookieService.set("id_token", this.user.idToken);
         const currentHost = window.location.host;
         const hostParts = currentHost.split(".");
         if(hostParts.length > 1) {
-          this.cookieService.set("domain", `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`);
+          this.cookieService.set("id_token", this.user.idToken, {domain: `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`});
+        } else {
+          this.cookieService.set("id_token", this.user.idToken);
         }
-        console.log("cookies: ", this.cookieService.getAll());
         this.router.navigate(['home']);
       } else {
         this.cookieService.delete("id_token");
