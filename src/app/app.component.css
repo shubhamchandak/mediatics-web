@@ -1,0 +1,15 @@
+/* Set the height of the viewport to 100vh (viewport height) */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hide scrollbars to prevent them from appearing */
+  }
+  
+  
+  /* Style the content area (adjust as needed) */
+  .app-content {
+    height: calc(100vh - 50px); /* Subtract the navigation height (adjust as needed) */
+    overflow-y: auto; /* Add vertical scrollbar when content exceeds the viewport height */
+    padding: 10px; /* Adjust padding as needed */
+  }

@@ -42,6 +42,7 @@ import { ProgressBarModule } from 'primeng/progressbar'
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { CookieService } from 'ngx-cookie-service';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,

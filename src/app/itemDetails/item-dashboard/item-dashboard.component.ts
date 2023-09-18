@@ -15,13 +15,12 @@ export class ItemDashboardComponent implements OnInit{
   cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
-        console.log('hello');
         return [
           { title: 'Performance', cols: 1, rows: 1 },
           { title: 'Intents', cols: 1, rows: 1 },
           { title: 'TextSummary', cols: 1, rows: 2},
           { title: 'Sentiments', cols: 1, rows: 1 },
-          { title: 'Offenses', cols: 1, rows: 1 },
+          { title: 'Offensive', cols: 1, rows: 1 },
         ];
       }
 
@@ -30,7 +29,7 @@ export class ItemDashboardComponent implements OnInit{
         { title: 'Intents', cols: 1, rows: 1 },
         { title: 'TextSummary', cols: 1, rows: 2},
         { title: 'Sentiments', cols: 1, rows: 2 },
-        { title: 'Offenses', cols: 1, rows: 2 },
+        { title: 'Offensive', cols: 1, rows: 2 },
       ];
     })
   );
@@ -40,7 +39,7 @@ export class ItemDashboardComponent implements OnInit{
   offensiveData: ChartDataSource[];
   numOfLikes: number;
   numOfComments: number;
-  dashboardCardMappings: any;
+  dashboardCardMappings: any = {};
   faHeart = faHeartPulse;
   faComments = faComments
 
@@ -48,39 +47,78 @@ export class ItemDashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.dataService.getItemDashboardData().subscribe({
-      next: data => {
-        setTimeout(() => this.populateData(data), 500);
-      },
-      error: error => {
-        console.log(error);
-      }
-    })
+    // this.dashboardCardMappings = {
+    //   Sentiments: { type: 'pieChart', dataSource: this.sentimentData },
+    //   Intents: { type: 'barChart', dataSource: this.intentData },
+    //   Offenses: { type: 'doughnutChart', dataSource: this.offensiveData},
+    //   Performance: { type: 'performanceStats', },
+    //   TextSummary: {type: 'textSummary'}
+    // }
+    console.log("initmappings: ", this.dashboardCardMappings);
+    this.setIntentCount();
+    this.setOffensiveCount();
+    this.setSentimentCount();
   }
 
-  populateData(data) {
-    console.log(data);
-    this.numOfLikes = 22124;
-    this.numOfComments = 736;
-    this.sentimentData = Object.keys(data["sentiment_count"]).map(x =>  ({ key: x, value: data["sentiment_count"][x] }));
-    this.offensiveData = Object.keys(data["offensive_count"]).map(x =>  ({ key: x, value: data["offensive_count"][x] }));
-    this.intentData = Object.keys(data["intent_count"]).map(x =>  ({ key: x, value: data["intent_count"][x] }));
-    this.dashboardCardMappings = {
-      Sentiments: { type: 'pieChart', dataSource: this.sentimentData },
-      Intents: { type: 'barChart', dataSource: this.intentData },
-      Offenses: { type: 'doughnutChart', dataSource: this.offensiveData},
-      Performance: { type: 'performanceStats', },
-      TextSummary: {type: 'textSummary'}
-    }
-  }
+  // populateData(data) {
+  //   console.log(data);
+  //   this.numOfLikes = 22124;
+  //   this.numOfComments = 736;
+  //   this.sentimentData = Object.keys(data["sentiment_count"]).map(x =>  ({ key: x, value: data["sentiment_count"][x] }));
+  //   this.offensiveData = Object.keys(data["offensive_count"]).map(x =>  ({ key: x, value: data["offensive_count"][x] }));
+  //   this.intentData = Object.keys(data["intent_count"]).map(x =>  ({ key: x, value: data["intent_count"][x] }));
+  //   this.dashboardCardMappings = {
+  //     Sentiments: { type: 'pieChart', dataSource: this.sentimentData },
+  //     Intents: { type: 'barChart', dataSource: this.intentData },
+  //     Offenses: { type: 'doughnutChart', dataSource: this.offensiveData},
+  //     Performance: { type: 'performanceStats', },
+  //     TextSummary: {type: 'textSummary'}
+  //   }
+  // }
 
   getChartType(title: string) {
     if (this.dashboardCardMappings && this.dashboardCardMappings[title] && this.dashboardCardMappings[title]['type']) {
-      console.log("getChartType: ", this.dashboardCardMappings[title]['type'])
+      // console.log("getChartType: ", this.dashboardCardMappings[title]['type'])
       return this.dashboardCardMappings[title]['type'];
     }
-    console.log("getChartType: ''")
+    // console.log("getChartType: ''")
     return "";
+  }
+
+  setIntentCount() {
+    this.dataService.getIntentCount().subscribe({
+      next: (data) => {
+        this.intentData = data.map(x => ({key: x.type, value: x.count}));
+        this.dashboardCardMappings['Intents'] = { type: 'barChart', dataSource: this.intentData };
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    })
+  }
+
+  setOffensiveCount() {
+    this.dataService.getOffensiveCount().subscribe({
+      next: (data) => {
+        this.offensiveData = data.map(x => ({key: x.type, value: x.count}));
+        this.dashboardCardMappings['Offensive'] = { type: 'doughnutChart', dataSource: this.offensiveData };
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    })
+  }
+
+  setSentimentCount() {
+    this.dataService.getSentimentCount().subscribe({
+      next: (data) => {
+        this.sentimentData = data.map(x => ({key: x.type, value: x.count}));
+        this.dashboardCardMappings['Sentiments'] = { type: 'pieChart', dataSource: this.sentimentData };
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    })
   }
 
 }
