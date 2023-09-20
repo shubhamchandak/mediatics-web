@@ -24,17 +24,17 @@ export class DataService {
 
   getIntentCount(): Observable<ITypeCount[]> {
     const params = {'videoId': this.getloadedVideo().videoId};
-    return this.http.get(this.baseUrl + "/data/getIntentCount", { params: params }).pipe(map(x => x["data"]));
+    return this.http.get(this.baseUrl + "/data/getIntentCount", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   getOffensiveCount(): Observable<ITypeCount[]> {
     const params = {'videoId': this.getloadedVideo().videoId};
-    return this.http.get(this.baseUrl + "/data/getOffensiveCount", { params: params }).pipe(map(x => x["data"]));
+    return this.http.get(this.baseUrl + "/data/getOffensiveCount", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   getSentimentCount(): Observable<ITypeCount[]> {
     const params = {'videoId': this.getloadedVideo().videoId};
-    return this.http.get(this.baseUrl + "/data/getSentimentCount", { params: params }).pipe(map(x => x["data"]));
+    return this.http.get(this.baseUrl + "/data/getSentimentCount", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   getCommentsAnalytics() {
@@ -46,10 +46,10 @@ export class DataService {
   }
 
   getUserVideos(): Observable<IVideoDetails[]> {
-    return this.http.get(this.baseUrl + "/data/getUserVideos").pipe(map(x => x["data"]));
+    return this.http.get(this.baseUrl + "/data/getUserVideos", { withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   processVideo(videoUrl: string) {
-    return this.http.post(this.baseUrl + "/data/processVideo", {videoUrl: videoUrl})
+    return this.http.post(this.baseUrl + "/data/processVideo", {videoUrl: videoUrl}, { withCredentials: true })
   }
 }
