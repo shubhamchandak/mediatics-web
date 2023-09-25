@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, map } from 'rxjs';
-import { ITypeCount, IVideoDetails } from '../model';
+import { IGetCommentsRequest, ITypeCount, IVideoDetails } from '../model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,8 +37,10 @@ export class DataService {
     return this.http.get(this.baseUrl + "/data/getSentimentCount", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
   }
 
-  getCommentsAnalytics() {
-    return this.http.get(this.baseUrl + "/getCommentsAnalytics");
+  getComments(getCommentsRequest: IGetCommentsRequest) {
+    getCommentsRequest.videoId = this.getloadedVideo().videoId;
+    const body = getCommentsRequest;
+    return this.http.post(this.baseUrl + "/data/getComments", body).pipe(map(x => x["data"]));
   }
 
   getItemDashboardData() {

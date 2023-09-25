@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: DashboardComponent },
   { path: 'item-dashboard', component: ItemDashboardComponent },
-  { path: 'item-table', component: ItemTableContentComponent },
+  { path: 'comments', component: ItemTableContentComponent },
   { path: 'item-summary', component: ItemSummaryComponent },
 ];
 

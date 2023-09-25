@@ -1,7 +1,7 @@
 <h3>Detailed Analysis</h3>
-<p-table #dt1 [value]="tableDataSource" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
-	[rowsPerPageOptions]="[10,25,50]" [loading]="false" styleClass="p-datatable-customers p-datatable-gridlines"
-	[paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+<p-table #dt1 [value]="tableDataSource" [lazy]="true" dataKey="id" [rows]="rows" [showCurrentPageReport]="true"
+	[rowsPerPageOptions]="rowsPerPageOption" [loading]="false" (onLazyLoad)="onLazyLoad($event)" styleClass="p-datatable-customers p-datatable-gridlines"
+	[paginator]="true" [totalRecords]="totalRecords" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 	[globalFilterFields]="['name','country.name','representative.name','status']" paginatorPosition="bottom">
 	<!-- <ng-template pTemplate="caption" [tableStyle]="{'min-height': '30rem'}">
 		<div class="p-d-flex">
@@ -28,7 +28,7 @@
 			<th>
 				<div class="p-d-flex p-jc-between p-ai-center">
 					Sentiment
-					<p-columnFilter field="Sentiment" matchMode="in" display="menu" [showMatchModes]="false"
+					<p-columnFilter field="Sentiment" display="menu" [showMatchModes]="false"
 						[showOperator]="false" [showAddButton]="false">
 						<ng-template pTemplate="header">
 							<!-- <div class="p-px-3 p-pt-3 p-pb-0">
@@ -37,7 +37,7 @@
 						</ng-template>
 						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
 							<p-multiSelect [ngModel]="value" [options]="SENTIMENTS" placeholder="Any"
-								(onChange)="log(value);log(filter);filter($event.value); customFilter('Sentiment', $event.value)" optionLabel="name">
+								(onChange)="filter($event.value)" optionLabel="name">
 								<ng-template let-option pTemplate="item">
 									<div class="p-multiselect-representative-option">
 										<span class="p-ml-1">{{option}}</span>
@@ -66,7 +66,7 @@
 						</ng-template>
 						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
 							<p-multiSelect [ngModel]="value" [options]="['Command', 'Fragment', 'Question', 'Statement']" placeholder="Any"
-								(onChange)="log(value);log(filter);filter($event.value); customFilter('Intent', $event.value)" optionLabel="name">
+								(onChange)="filter($event.value)" optionLabel="name">
 								<ng-template let-option pTemplate="item">
 									<div class="p-multiselect-representative-option">
 										<span class="p-ml-1">{{option}}</span>
@@ -88,8 +88,8 @@
 							</div> -->
 						</ng-template>
 						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
-							<p-multiSelect [ngModel]="value" [options]="['Offensive', 'Not Offensive']" placeholder="Any"
-								(onChange)="log(value);log(filter);filter($event.value); customFilter('Offensive', $event.value)" optionLabel="name">
+							<p-multiSelect [ngModel]="value" [options]="['Offensive', 'Not_Offensive']" placeholder="Any"
+								(onChange)="filter($event.value)" optionLabel="name">
 								<ng-template let-option pTemplate="item">
 									<div class="p-multiselect-representative-option">
 										<span class="p-ml-1">{{option}}</span>
@@ -129,7 +129,7 @@
 				
 			</td>
 			<td [ngStyle]="{'width': '500px'}">
-				<span class="comment">{{data.comments}}</span>
+				<span class="comment">{{data.comment}}</span>
 			</td>
 			<td>
 				<span class="image-text" [ngStyle]="(data.Sentiment == 'Negative' && {'color': 'red'}) || (data.Sentiment == 'Positive' && {'color': 'green'})">{{data.Sentiment}}</span>

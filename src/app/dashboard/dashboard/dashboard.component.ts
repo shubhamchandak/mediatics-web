@@ -59,4 +59,9 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['item-dashboard']);
   }
 
+  commentsClick(videoDetails: IVideoDetails) {
+    this.dataService.loadVideo(videoDetails);
+    this.router.navigate(['comments']);
+  }
+
 }

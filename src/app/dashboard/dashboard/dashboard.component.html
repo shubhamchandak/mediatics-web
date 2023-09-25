@@ -26,7 +26,7 @@
             <mat-card-title class="text-oneline">{{ videoDetail.title }}</mat-card-title>
             <mat-card-actions>
                 <button mat-button matTooltip="Dashboard" (click)="dashboardClick(videoDetail)"><fa-icon [icon]="faChartLine" style="font-size:2em; color: #034875;"></fa-icon></button>
-                <button mat-button matTooltip="Filters"><fa-icon [icon]="faTable" style="font-size:2em; color: #673ab7;"></fa-icon></button>
+                <button mat-button matTooltip="Filters" (click)="commentsClick(videoDetail)"><fa-icon [icon]="faTable" style="font-size:2em; color: #673ab7;"></fa-icon></button>
                 <button mat-button matTooltip="AI Summary"><fa-icon [icon]="faLightbulb" style="font-size:2em; color: #f8b809;"></fa-icon></button>
                 <button mat-button matTooltip="Download"><fa-icon [icon]="faDownload" style="font-size:2em; color: #141418;"></fa-icon></button>
             </mat-card-actions>

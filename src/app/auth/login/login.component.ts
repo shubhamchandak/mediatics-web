@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['login']);
       }
     });
+    // this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID).then(x => console.log("aceess_token: ", x));
   }
 
   signInWithGoogle(): void {
