@@ -40,7 +40,7 @@ export class DataService {
   getComments(getCommentsRequest: IGetCommentsRequest) {
     getCommentsRequest.videoId = this.getloadedVideo().videoId;
     const body = getCommentsRequest;
-    return this.http.post(this.baseUrl + "/data/getComments", body).pipe(map(x => x["data"]));
+    return this.http.post(this.baseUrl + "/data/getComments", body, {withCredentials: true}).pipe(map(x => x["data"]));
   }
 
   getItemDashboardData() {
