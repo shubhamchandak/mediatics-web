@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, map } from 'rxjs';
 import { IGetCommentsRequest, ITypeCount, IVideoDetails } from '../model';
@@ -53,5 +53,18 @@ export class DataService {
 
   processVideo(videoUrl: string) {
     return this.http.post(this.baseUrl + "/data/processVideo", {videoUrl: videoUrl}, { withCredentials: true })
+  }
+
+  getSummary() {
+    const params = {'videoId': this.getloadedVideo().videoId};
+    return this.http.get(this.baseUrl + "/data/getSummary", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
+  }
+
+  getUserDetails() {
+    return this.http.get(this.baseUrl + "/user/getUserDetails", { withCredentials: true }).pipe(map(x => x["data"]));
+  }
+
+  createNewUser() {
+    return this.http.post(this.baseUrl + "/user/createNewUser", {}, { withCredentials: true })
   }
 }

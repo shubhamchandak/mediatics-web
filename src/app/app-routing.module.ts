@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'home', component: DashboardComponent },
   { path: 'item-dashboard', component: ItemDashboardComponent },
   { path: 'comments', component: ItemTableContentComponent },
-  { path: 'item-summary', component: ItemSummaryComponent },
+  { path: 'summary', component: ItemSummaryComponent },
 ];
 
 @NgModule({

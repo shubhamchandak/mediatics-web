@@ -27,22 +27,22 @@
             <!-- <div>Card Content Here </div> -->
             <div *ngIf="card.title == 'Top Topics'" style="margin-top: 5%; margin-right: 5%;">
                 <ul>
-                    <li *ngFor="let item of hotTopics"> <span style="font-weight: bold;">{{item[0]}}</span>{{item[1]}}</li>
+                    <li *ngFor="let item of hotTopics">{{item}}</li>
                 </ul>
             </div>
             <div *ngIf="card.title == 'Positive Feedback'" style="margin-top: 5%; margin-right: 5%;">
                 <ul>
-                    <li *ngFor="let item of positiveFeedback"><span style="font-weight: bold;">{{item[0]}}</span>{{item[1]}}</li>
+                    <li *ngFor="let item of positiveFeedback">{{item}}</li>
                 </ul>
             </div>
             <div *ngIf="card.title == 'Negative Feedback'" style="margin-top: 5%; margin-right: 5%;">
                 <ul>
-                    <li *ngFor="let item of negativeFeedback"> <span style="font-weight: bold;">{{item[0]}}</span>{{item[1]}}</li>
+                    <li *ngFor="let item of negativeFeedback">{{item}}</li>
                 </ul>
             </div>
             <div *ngIf="card.title == 'Suggestions'" style="margin-top: 5%; margin-right: 5%;">
                 <ul>
-                    <li *ngFor="let item of contentSuggestions"><span style="font-weight: bold;">{{item[0]}}</span>{{item[1]}}</li>
+                    <li *ngFor="let item of contentSuggestions">{{item}}</li>
                 </ul>
             </div>
           </mat-card-content>

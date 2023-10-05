@@ -7,6 +7,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { DataService } from 'src/app/services/data.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private authService: SocialAuthService,
     private userService: UserService,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
@@ -33,14 +35,10 @@ export class LoginComponent implements OnInit {
       this.loggedIn = user != null;
       if(this.loggedIn) {
         console.log("id_token: ", this.user.idToken);
-        const currentHost = window.location.host;
-        const hostParts = currentHost.split(".");
-        if(hostParts.length > 1) {
-          this.cookieService.set("id_token", this.user.idToken, {domain: `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`});
-        } else {
-          this.cookieService.set("id_token", this.user.idToken);
-        }
-        this.router.navigate(['home']);
+        this.setCookie();
+        // this.dataService.getUserDetails()
+        // this.router.navigate(['home']);
+        this.login();
       } else {
         this.cookieService.delete("id_token");
         this.router.navigate(['login']);
@@ -58,6 +56,37 @@ export class LoginComponent implements OnInit {
   }
 
   refreshToken(): void {
-    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID);
+    this.authService.refreshAuthToken(GoogleLoginProvider.PROVIDER_ID)
+  }
+
+  setCookie(): void {
+    const currentHost = window.location.host;
+    const hostParts = currentHost.split(".");
+    if(hostParts.length > 1) {
+      this.cookieService.set("id_token", this.user.idToken, {domain: `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`});
+    } else {
+      this.cookieService.set("id_token", this.user.idToken);
+    }
+  }
+
+  login(): void {
+    this.dataService.getUserDetails().subscribe({
+      next: (data) => {
+        this.router.navigate(['home']);
+      },
+      error: (err) => {
+        if(err.error && err.error.message && err.error.message.errorCode == 404) {
+          this.dataService.createNewUser().subscribe({
+            next: (data) => {
+              this.router.navigate(['home']);
+            },
+            error: (err) => {
+              console.log("error creating user account!", err)
+              this.router.navigate(['error']);
+            } 
+          })
+        }
+      }
+    })
   }
 }
