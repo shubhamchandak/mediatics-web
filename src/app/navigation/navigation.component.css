@@ -1,20 +1,29 @@
-.sidenav-container {
-  height: auto;
-}
+/* top-navbar.component.scss */
 
-.sidenav {
-  width: 200px;
-}
-
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
+.fixed-toolbar {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  position: -webkit-sticky; /* For macOS/iOS Safari */
 }
 
-a:link { text-decoration: none; }
+.mat-toolbar-row {
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-height: 80px; /* Adjust the max height as needed */
+  max-width: 100%; /* Ensure the logo stays within its container */
+  margin-right: 0px; /* Add margin to separate the logo from site name */
+}
+
+.spacer {
+  flex: 1;
+  text-align: right;
+}

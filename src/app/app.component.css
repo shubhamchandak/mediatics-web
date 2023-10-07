@@ -1,15 +1,14 @@
-/* Set the height of the viewport to 100vh (viewport height) */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Hide scrollbars to prevent them from appearing */
-  }
-  
-  
-  /* Style the content area (adjust as needed) */
-  .app-content {
-    height: calc(100vh - 50px); /* Subtract the navigation height (adjust as needed) */
-    overflow-y: auto; /* Add vertical scrollbar when content exceeds the viewport height */
-    padding: 10px; /* Adjust padding as needed */
-  }
+/* Add this to your CSS or component's CSS file */
+app-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #333; /* Customize the background color */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+
+.content-wrapper {
+  padding-top: 60px; /* Adjust this value to match the height of your navigation bar */
+}
