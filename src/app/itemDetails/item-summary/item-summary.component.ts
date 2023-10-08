@@ -61,7 +61,6 @@ export class ItemSummaryComponent implements OnInit {
       console.log("getChartType: ", this.dashboardCardMappings[title]['type'])
       return this.dashboardCardMappings[title]['type'];
     }
-    console.log("getChartType: ''")
     return "";
   }
 

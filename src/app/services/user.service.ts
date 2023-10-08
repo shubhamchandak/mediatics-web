@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   private user: SocialUser;
+  private loggedIn: boolean;
 
   constructor() {}
 
@@ -16,4 +17,13 @@ export class UserService {
   getUser = (): SocialUser => {
     return this.user;
   };
+
+  setLoggedIn = (status: boolean) => {
+    this.loggedIn = status;
+  }
+
+  isLoggedIn = (): boolean => {
+    return this.loggedIn;
+  }
+
 }

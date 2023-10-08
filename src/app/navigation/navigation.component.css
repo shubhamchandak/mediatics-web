@@ -27,3 +27,13 @@
   flex: 1;
   text-align: right;
 }
+
+.transparent-bg {
+  background-color: #8755df; /* Transparent background color */
+  transition: background-color 0.5s ease; /* Transition effect */
+}
+
+.custom-menu-item {
+  display: block;
+  width: 190px; /* Adjust the width as needed */
+}

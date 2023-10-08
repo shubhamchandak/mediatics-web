@@ -54,7 +54,7 @@ export class ItemDashboardComponent implements OnInit{
     //   Performance: { type: 'performanceStats', },
     //   TextSummary: {type: 'textSummary'}
     // }
-    console.log("initmappings: ", this.dashboardCardMappings);
+    // console.log("initmappings: ", this.dashboardCardMappings);
     this.setIntentCount();
     this.setOffensiveCount();
     this.setSentimentCount();

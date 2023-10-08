@@ -43,6 +43,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { HomeComponent } from './homepage/home/home.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     BarChartComponent,
     ItemTableContentComponent,
     ItemSummaryComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '841355690055-kbh38gpf8c04bk8v6dd6amh50cpsqqpf.apps.googleusercontent.com'
+              '841355690055-kbh38gpf8c04bk8v6dd6amh50cpsqqpf.apps.googleusercontent.com', {oneTapEnabled: false}
             ),
           },
         ],

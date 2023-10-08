@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { IGetCommentsRequest, ITypeCount, IVideoDetails } from '../model';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class DataService {
   baseUrl: string = environment.apiBaseUrl;
 
   loadedVideoDetails: IVideoDetails = null;
+  userVideoList: IVideoDetails[];
 
   constructor(private http: HttpClient) {}
 
@@ -48,7 +49,13 @@ export class DataService {
   }
 
   getUserVideos(): Observable<IVideoDetails[]> {
-    return this.http.get(this.baseUrl + "/data/getUserVideos", { withCredentials: true }).pipe(map(x => x["data"]));
+    if(this.userVideoList) {
+      return of(this.userVideoList);
+    }
+    return this.http.get(this.baseUrl + "/data/getUserVideos", { withCredentials: true }).pipe(map(x => {
+      this.userVideoList = x["data"];
+      return this.userVideoList;
+    }));
   }
 
   processVideo(videoUrl: string) {
