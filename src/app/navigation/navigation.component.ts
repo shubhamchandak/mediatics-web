@@ -135,7 +135,8 @@ export class NavigationComponent implements OnInit{
 
   logout(): void {
     this.menuTrigger.closeMenu();
-    this.cookieService.delete('id_token', '/', this.cookieDomain);
+    const cookieExpiry = new Date();  //expire cokie immediately
+    this.cookieService.set('id_token', 'logout', {domain: this.cookieDomain, expires: cookieExpiry, secure: this.cookieDomain != 'localhost' });
     this.userService.setLoggedIn(false);
     if(this.userService.getUser()) {
       this.signOut();
