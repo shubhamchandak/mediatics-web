@@ -133,7 +133,7 @@ export class NavigationComponent implements OnInit{
 
   logout(): void {
     this.menuTrigger.closeMenu();
-    this.cookieService.delete('id_token');
+    this.cookieService.delete('id_token', '/');
     this.userService.setLoggedIn(false);
     if(this.userService.getUser()) {
       this.signOut();
