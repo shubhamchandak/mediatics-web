@@ -56,14 +56,13 @@ export class NavigationComponent implements OnInit{
     this.userService.setLoggedIn(this.cookieService.get("id_token").length > 0);
     if(this.userService.isLoggedIn()) {
       this.getUserDetails();
-    } else {
-      this.enableLoginFlow();
     }
+    this.enableLoginFlow();
   }
 
   enableLoginFlow() {
     this.authService.authState.subscribe((user) => {
-      console.log("auth satge change: ", user);
+      // console.log("auth satge change: ", user);
       this.menuTrigger.closeMenu();
       this.userService.setUser(user);
       this.user = this.userService.getUser();
@@ -139,6 +138,6 @@ export class NavigationComponent implements OnInit{
     if(this.userService.getUser()) {
       this.signOut();
     }
-    this.router.navigateByUrl['/'];
+    this.router.navigate(['/']);
   }
 }
