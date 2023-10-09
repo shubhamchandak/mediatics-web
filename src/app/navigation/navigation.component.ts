@@ -23,6 +23,7 @@ export class NavigationComponent implements OnInit{
   private scrollPosition = 0;
   user: SocialUser;
   loggedIn: boolean;
+  cookieDomain: string;
 
   @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
 
@@ -82,13 +83,14 @@ export class NavigationComponent implements OnInit{
   setCookie(): void {
     const currentHost = window.location.host;
     const hostParts = currentHost.split(".");
+    if(hostParts.length > 1) {
+      this.cookieDomain = `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`;
+    } else {
+      this.cookieDomain = 'localhost';
+    }
     const cookieExpiry = new Date();
     cookieExpiry.setHours(cookieExpiry.getHours() + 1);
-    if(hostParts.length > 1) {
-      this.cookieService.set("id_token", this.user.idToken, {domain: `.${hostParts[hostParts.length-2]}.${hostParts[hostParts.length-1]}`, expires: cookieExpiry, secure: true });
-    } else {
-      this.cookieService.set("id_token", this.user.idToken, {expires: cookieExpiry, secure: true});
-    }
+    this.cookieService.set("id_token", this.user.idToken, {domain: this.cookieDomain, expires: cookieExpiry, secure: this.cookieDomain != 'localhost' });
   }
 
   getUserDetails(): void {
@@ -133,7 +135,7 @@ export class NavigationComponent implements OnInit{
 
   logout(): void {
     this.menuTrigger.closeMenu();
-    this.cookieService.delete('id_token', '/');
+    this.cookieService.delete('id_token', '/', this.cookieDomain);
     this.userService.setLoggedIn(false);
     if(this.userService.getUser()) {
       this.signOut();
