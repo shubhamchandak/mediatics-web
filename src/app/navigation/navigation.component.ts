@@ -90,7 +90,7 @@ export class NavigationComponent implements OnInit{
     }
     const cookieExpiry = new Date();
     cookieExpiry.setHours(cookieExpiry.getHours() + 1);
-    this.cookieService.set("id_token", this.user.idToken, {domain: this.cookieDomain, expires: cookieExpiry, secure: this.cookieDomain != 'localhost' });
+    this.cookieService.set("id_token", this.user.idToken, {domain: this.cookieDomain, expires: cookieExpiry });
   }
 
   getUserDetails(): void {
@@ -135,8 +135,13 @@ export class NavigationComponent implements OnInit{
 
   logout(): void {
     this.menuTrigger.closeMenu();
-    const cookieExpiry = new Date();  //expire cokie immediately
-    this.cookieService.set('id_token', 'logout', {domain: this.cookieDomain, expires: cookieExpiry, secure: this.cookieDomain != 'localhost' });
+    // const cookieExpiry = new Date();  //expire cookie immediately
+    // this.cookieService.set('id_token', 'logout', {domain: this.cookieDomain, expires: cookieExpiry, secure: this.cookieDomain != 'localhost' });
+    if(this.cookieService.check("id_token")) {
+      console.log("deleting cookie!!!");
+      this.cookieService.deleteAll("/", this.cookieDomain);
+      console.log("cookie exist: ", this.cookieService.check("id_token"));
+    }
     this.userService.setLoggedIn(false);
     if(this.userService.getUser()) {
       this.signOut();
