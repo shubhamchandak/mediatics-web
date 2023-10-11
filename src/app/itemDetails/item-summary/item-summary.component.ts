@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-item-summary',
@@ -39,7 +40,10 @@ export class ItemSummaryComponent implements OnInit {
 
   hotTopics = []
 
-  constructor(private breakpointObserver: BreakpointObserver, private dataService: DataService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver, 
+    private dataService: DataService,
+    private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -51,6 +55,7 @@ export class ItemSummaryComponent implements OnInit {
         this.hotTopics = data["topTopics"]?.split("\n")?.splice(1);  
       },
       error: (err) => {
+        this.notificationService.notify('error', err.error.message);
         console.log(err);
       },
     })

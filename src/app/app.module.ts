@@ -44,6 +44,8 @@ import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.co
 import { CookieService } from 'ngx-cookie-service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HomeComponent } from './homepage/home/home.component';
+import { NotifierModule } from 'angular-notifier';
+import { notifierDefaultOptions } from './services/notification.service';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,8 @@ import { HomeComponent } from './homepage/home/home.component';
     SliderModule,
     DropdownModule,
     ProgressBarModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    NotifierModule.withConfig(notifierDefaultOptions)
   ],
   providers: [
     {

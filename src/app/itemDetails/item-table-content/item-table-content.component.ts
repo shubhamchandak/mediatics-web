@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IGetCommentsRequest } from 'src/app/model';
 import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-item-table-content',
@@ -26,7 +27,9 @@ export class ItemTableContentComponent implements OnInit {
 
   SENTIMENTS = ['Positive', 'Negative', 'Neutral'];
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     const getCommentsRequest: IGetCommentsRequest = {
@@ -69,6 +72,7 @@ export class ItemTableContentComponent implements OnInit {
         this.tableDataSource = this.originalDataSource;
       },
       error: error => {
+        this.notificationService.notify('error', error.error.message);
         console.log(error);
       }
     });

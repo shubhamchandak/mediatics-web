@@ -27,7 +27,13 @@
               "src/styles.css",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeicons/primeicons.css"
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/angular-notifier/styles/core.css",
+              "node_modules/angular-notifier/styles/themes/theme-material.css",
+              "node_modules/angular-notifier/styles/types/type-success.css",
+              "node_modules/angular-notifier/styles/types/type-info.css",
+              "node_modules/angular-notifier/styles/types/type-warning.css",
+              "node_modules/angular-notifier/styles/types/type-error.css"
             ],
             "scripts": []
           },

@@ -59,7 +59,7 @@ export class DataService {
   }
 
   processVideo(videoUrl: string) {
-    return this.http.post(this.baseUrl + "/data/processVideo", {videoUrl: videoUrl}, { withCredentials: true })
+    return this.http.post(this.baseUrl + "/data/processVideo", {videoUrl: videoUrl}, { withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   getSummary() {

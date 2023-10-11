@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { DataService } from '../services/data.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-navigation',
@@ -18,7 +19,8 @@ export class NavigationComponent implements OnInit{
     private router: Router,
     private cookieService: CookieService,
     private dataService: DataService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private notificationService: NotificationService) {}
 
   private scrollPosition = 0;
   user: SocialUser;
@@ -100,17 +102,20 @@ export class NavigationComponent implements OnInit{
         this.router.navigate([queryParams.get('returnUrl') || 'home']);
       },
       error: (err) => {
-        if(err.error && err.error.message && err.error.message.errorCode == 404) {
+        if(err.error && err.error.errorCode == 404) {
           this.dataService.createNewUser().subscribe({
             next: (data) => {
               this.router.navigate(['home']);
+              this.notificationService.notify('info', 'Welcome! Lets get started with your first video')
             },
             error: (err) => {
+              this.notificationService.notify('error', 'Error creating account');
               console.log("error creating user account!", err)
               this.router.navigate(['error']);
             } 
           })
         } else {
+          this.notificationService.notify('error', err.error ? err.error.message : 'Something went wrong')
           console.log("error: ", err);
         }
       }
@@ -147,5 +152,6 @@ export class NavigationComponent implements OnInit{
       this.signOut();
     }
     this.router.navigate(['/']);
+    this.notificationService.notify('info', 'Successfully logged out')
   }
 }
