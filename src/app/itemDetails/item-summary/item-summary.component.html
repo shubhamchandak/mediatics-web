@@ -1,53 +1,17 @@
 <div class="grid-container">
-    <mat-grid-list cols="4" rowHeight="940px">
-      <mat-grid-tile
-        *ngFor="let card of cards | async"
-        [colspan]="card.cols"
-        [rowspan]="card.rows"
-      >
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              {{ card.title }}
-              <button
-                mat-icon-button
-                class="more-button"
-                [matMenuTriggerFor]="menu"
-                aria-label="Toggle menu"
-              >
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Expand</button>
-                <button mat-menu-item>Remove</button>
-              </mat-menu>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <!-- <div>Card Content Here </div> -->
-            <div *ngIf="card.title == 'Top Topics'" style="margin-top: 5%; margin-right: 5%;">
-                <ul>
-                    <li *ngFor="let item of hotTopics">{{item}}</li>
-                </ul>
-            </div>
-            <div *ngIf="card.title == 'Positive Feedback'" style="margin-top: 5%; margin-right: 5%;">
-                <ul>
-                    <li *ngFor="let item of positiveFeedback">{{item}}</li>
-                </ul>
-            </div>
-            <div *ngIf="card.title == 'Negative Feedback'" style="margin-top: 5%; margin-right: 5%;">
-                <ul>
-                    <li *ngFor="let item of negativeFeedback">{{item}}</li>
-                </ul>
-            </div>
-            <div *ngIf="card.title == 'Suggestions'" style="margin-top: 5%; margin-right: 5%;">
-                <ul>
-                    <li *ngFor="let item of contentSuggestions">{{item}}</li>
-                </ul>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
+  <div class="card-container" *ngFor="let card of cards">
+    <mat-card class="dashboard-card" [class.expanded]="card.expanded" [style.background-color]="card.color">
+      <mat-card-header>
+        <mat-card-title class="card-title">{{ card.title }}</mat-card-title>
+        <button mat-icon-button (click)="toggleCard(card)">
+          <mat-icon class="toggle-icon">{{ card.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </button>
+      </mat-card-header>
+      <mat-card-content class="dashboard-card-content">
+        <ol class="list">
+          <li *ngFor="let item of cardItems[card.title]">{{ item }}</li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
   </div>
-  
+</div>

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DataService } from 'src/app/services/data.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
@@ -10,38 +8,27 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./item-summary.component.css']
 })
 export class ItemSummaryComponent implements OnInit {
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-
-        return [
-          { title: 'Top Topics', cols: 1, rows: 1 },
-          { title: 'Positive Feedback', cols: 1, rows: 1 },
-          { title: 'Negative Feedback', cols: 1, rows: 1},
-          { title: 'Suggestions', cols: 1, rows: 1 },
-        ];
-      }
-
-      return [
-          { title: 'Top Topics', cols: 1, rows: 1 },
-          { title: 'Positive Feedback', cols: 1, rows: 1 },
-          { title: 'Negative Feedback', cols: 1, rows: 1},
-          { title: 'Suggestions', cols: 1, rows: 1 },
-      ];
-    })
-  );
+  cards = [
+      { title: 'Top Topics', color: "white", expanded: true },
+      { title: 'Positive Feedback', color: "white", expanded: true },
+      { title: 'Negative Feedback', color: "white", expanded: true },
+      { title: 'Suggestions', color: "white", expanded: true },
+    ];
 
   dashboardCardMappings: any;
   positiveFeedback = [];
-
   negativeFeedback = [];
-
   contentSuggestions = [];
-
   hotTopics = []
 
+  cardItems = {
+    'Top Topics': this.hotTopics,
+    'Positive Feedback': this.positiveFeedback,
+    'Negative Feedback': this.negativeFeedback,
+    'Suggestions': this.contentSuggestions
+  };
+
   constructor(
-    private breakpointObserver: BreakpointObserver, 
     private dataService: DataService,
     private notificationService: NotificationService) {
   }
@@ -49,10 +36,16 @@ export class ItemSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getSummary().subscribe({
       next: (data) => {
-        this.positiveFeedback = data["positiveFeedback"]?.split("\n")?.splice(1);
-        this.negativeFeedback = data["negativeFeedback"]?.split("\n")?.splice(1);
-        this.contentSuggestions = data["suggestions"]?.split("\n")?.splice(1);
-        this.hotTopics = data["topTopics"]?.split("\n")?.splice(1);  
+        this.positiveFeedback = data["positiveFeedback"]?.replaceAll("- ", "")?.split("\n")?.splice(1);
+        this.negativeFeedback = data["negativeFeedback"]?.replaceAll("- ", "")?.split("\n")?.splice(1);
+        this.contentSuggestions = data["suggestions"]?.replaceAll("- ", "")?.split("\n")?.splice(1);
+        this.hotTopics = data["topTopics"]?.replaceAll("- ", "")?.split("\n")?.splice(1);
+        this.cardItems = {
+          'Top Topics': this.hotTopics,
+          'Positive Feedback': this.positiveFeedback,
+          'Negative Feedback': this.negativeFeedback,
+          'Suggestions': this.contentSuggestions
+        };
       },
       error: (err) => {
         this.notificationService.notify('error', err.error.message);
@@ -61,12 +54,13 @@ export class ItemSummaryComponent implements OnInit {
     })
   }
 
-  getChartType(title: string) {
-    if (this.dashboardCardMappings && this.dashboardCardMappings[title] && this.dashboardCardMappings[title]['type']) {
-      console.log("getChartType: ", this.dashboardCardMappings[title]['type'])
-      return this.dashboardCardMappings[title]['type'];
-    }
-    return "";
+  toggleCard(card) {
+    card.expanded = !card.expanded;
   }
 
+  // Function to check if the view is in mobile mode
+  isMobileView(): boolean {
+    const screenWidth = window.innerWidth;
+    return screenWidth < 768; // Adjust breakpoint as needed
+  }
 }

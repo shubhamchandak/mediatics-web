@@ -1,41 +1,73 @@
 .grid-container {
-    margin: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card {
+  color: white;
+  margin: 5px; /* Reduce spacing between cards */
+  border-radius: 10px; /* Add rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: max-height 0.3s ease-in-out;
+  max-height: 50px; /* Initially collapse the cards */
+  overflow: hidden;
+}
+
+.mat-card.expanded {
+  max-height: none; /* Expand the cards */
+}
+
+.dashboard-card-content {
+  padding: 10px;
+  margin: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+ul.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  flex: 1;
+  overflow: auto; /* Enable scrolling within the card */
+}
+
+li {
+  margin-bottom: 12px; /* Add spacing between list items */
+  font-size: 16px; /* Set a base font size */
+  color: #212121; /* Text color */
+  text-align: justify; /* Justify text to align with horizontal borders */
+  margin-left: -20px;
+}
+
+.card-title {
+  color: #5f458d;
+}
+
+.toggle-icon {
+  color: #8755df; /* Change to your desired icon color */
+}
+
+/* Styling for the expansion button */
+button {
+  margin-left: auto;
+}
+
+/* Larger screens: Cards in parallel */
+@media (min-width: 768px) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive card columns */
+    gap: 10px; /* Reduce spacing between cards on larger screens */
   }
-  
-  .more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
+  .card-container {
+    width: auto;
   }
-  
-  .dashboard-card-content {
-    text-align: center;
-    height: 100%;
-    margin-top: -3%;
-  }
-  
-  .dashboard-card {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-  }
-  
-  ul {
-    list-style-type: none;
-    text-align: left;
-    margin-bottom: 25px;
-    font-size: medium;
-  }
-  li {
-    padding: 5px;
-    margin-top: 5px;
-  }
-  
-  h3 {
-    font-style: italic;
-  }
-  
+}
