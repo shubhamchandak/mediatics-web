@@ -32,7 +32,6 @@ import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { DoughnutChartComponent } from './charts/doughnut-chart/doughnut-chart.component';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ItemTableContentComponent } from './itemDetails/item-table-content/item-table-content.component';
 import { TableModule } from 'primeng/table'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { SliderModule } from 'primeng/slider'
@@ -58,7 +57,6 @@ import { notifierDefaultOptions } from './services/notification.service';
     PieChartComponent,
     DoughnutChartComponent,
     BarChartComponent,
-    ItemTableContentComponent,
     ItemSummaryComponent,
     HomeComponent,
   ],

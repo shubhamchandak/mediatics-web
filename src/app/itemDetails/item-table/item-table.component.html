@@ -1,72 +1,110 @@
-<button mat-raised-button (click)="addColumn()">Add column</button>
-<button mat-raised-button (click)="removeColumn()">Remove column</button>
-<button mat-raised-button (click)="shuffle()">Shuffle</button>
+<p-table #dt1 [value]="tableDataSource" [lazy]="true" dataKey="id" [rows]="rows" [showCurrentPageReport]="true"
+	[rowsPerPageOptions]="rowsPerPageOption" [loading]="false" (onLazyLoad)="onLazyLoad($event)" styleClass="p-datatable-customers p-datatable-gridlines"
+	[paginator]="true" [totalRecords]="totalRecords" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[globalFilterFields]="['name','country.name','representative.name','status']" paginatorPosition="bottom">
+	<ng-template pTemplate="header">
+		<tr>
+			<th [ngStyle]="{'width': '100px'}">
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Username
+					<!-- <p-columnFilter type="text" field="name" display="menu"></p-columnFilter> -->
+				</div>
+			</th>
+			<th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Comment
+					<!-- <p-columnFilter type="text" field="data.comment" display="menu"></p-columnFilter> -->
+				</div>
+			</th>
+			<th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Sentiment
+					<p-columnFilter field="Sentiment" display="menu" [showMatchModes]="false"
+						[showOperator]="false" [showAddButton]="false">
+						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
+							<p-multiSelect [ngModel]="value" [options]="SENTIMENTS" placeholder="Any"
+								(onChange)="filter($event.value)" optionLabel="name">
+								<ng-template let-option pTemplate="item">
+									<div class="p-multiselect-representative-option">
+										<span class="p-ml-1">{{option}}</span>
+									</div>
+								</ng-template>
+							</p-multiSelect>
+						</ng-template>
+					</p-columnFilter>
+				</div>
+			</th>
+			<th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Published On
+					<!-- <p-columnFilter type="date" field="date" display="menu"></p-columnFilter> -->
+				</div>
+			</th>
+			<th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Intent
+					<p-columnFilter field="Intent" matchMode="in" display="menu" [showMatchModes]="false"
+						[showOperator]="false" [showAddButton]="false">
+						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
+							<p-multiSelect [ngModel]="value" [options]="['Command', 'Fragment', 'Question', 'Statement']" placeholder="Any"
+								(onChange)="filter($event.value)" optionLabel="name">
+								<ng-template let-option pTemplate="item">
+									<div class="p-multiselect-representative-option">
+										<span class="p-ml-1">{{option}}</span>
+									</div>
+								</ng-template>
+							</p-multiSelect>
+						</ng-template>
+					</p-columnFilter>
+				</div>
+			</th>
+			<th>
+				<div class="p-d-flex p-jc-between p-ai-center">
+					Offensive
+					<p-columnFilter field="Offensive" matchMode="in" display="menu" [showMatchModes]="false"
+						[showOperator]="false" [showAddButton]="false">
+						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
+							<p-multiSelect [ngModel]="value" [options]="['Offensive', 'Not_Offensive']" placeholder="Any"
+								(onChange)="filter($event.value)" optionLabel="name">
+								<ng-template let-option pTemplate="item">
+									<div class="p-multiselect-representative-option">
+										<span class="p-ml-1">{{option}}</span>
+									</div>
+								</ng-template>
+							</p-multiSelect>
+						</ng-template>
+					</p-columnFilter>
+				</div>
+			</th>
 
-<div class="table-container">
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    (matSortChange)="announceSortChange($event)"
-    class="mat-elevation-z8"
-  >
-    <ng-container [matColumnDef]="columns.username">
-      <th mat-header-cell *matHeaderCellDef class="mat-column-username">
-        {{ columns.username }}
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <img
-          src="{{ element.authorProfileImageUrl }}"
-          class="user-profile-image"
-        />
-        {{ element["authorDisplayName"] }}
-      </td>
-    </ng-container>
-
-    <ng-container [matColumnDef]="columns.comment" class="mat-column-comment">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by comments"
-      >
-        {{ columns.comment }}
-      </th>
-      <td mat-cell *matCellDef="let element">
-        {{ element["comments"] }}
-      </td>
-    </ng-container>
-
-    <ng-container [matColumnDef]="columns.intent">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="Sort by intent"
-      >
-        {{ columns.intent }}
-      </th>
-      <td mat-cell *matCellDef="let element">{{ element["Intent"] }}</td>
-    </ng-container>
-
-    <ng-container [matColumnDef]="columns.sentiment">
-      <th mat-header-cell *matHeaderCellDef>{{ columns.sentiment }}</th>
-      <td mat-cell *matCellDef="let element">{{ element["Sentiment"] }}</td>
-    </ng-container>
-
-    <ng-container [matColumnDef]="columns.offensive">
-      <th mat-header-cell *matHeaderCellDef>{{ columns.offensive }}</th>
-      <td mat-cell *matCellDef="let element">{{ element["Offensive"] }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-  </table>
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page of comments"
-    class="mat-paginator-sticky"
-  >
-  </mat-paginator>
-</div>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-data>
+		<tr>
+			<td [ngStyle]="{'width': '100px'}">
+				<span  class="username">
+					<img src="{{ data.authorProfileImageUrl }}" (error) ="onImgError($event)" class="user-profile-image"/>
+					{{data.authorDisplayName}}
+				</span>
+				
+			</td>
+			<td [ngStyle]="{'width': '500px'}">
+				<span class="comment">{{data.comment}}</span>
+			</td>
+			<td>
+				<span class="image-text" [ngStyle]="(data.Sentiment == 'Negative' && {'color': 'red'}) || (data.Sentiment == 'Positive' && {'color': 'green'})">{{data.Sentiment}}</span>
+			</td>
+			<td>
+				{{data.publishedAt | date: 'MM/dd/yyyy:HH:MM'}}
+			</td>
+			<td>
+				<span [ngStyle]="data.Intent == 'Question' && {'color': 'blue'}">
+					{{data.Intent}}
+				</span>
+			</td>
+			<td>
+				<span [ngStyle]="data.Offensive == 'Offensive' && {'color': 'red'}">{{data.Offensive}}</span>
+			</td>
+		</tr>
+	</ng-template>
+</p-table>

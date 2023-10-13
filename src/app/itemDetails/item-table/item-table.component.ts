@@ -1,97 +1,92 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
+import { IGetCommentsRequest } from 'src/app/model';
 import { DataService } from 'src/app/services/data.service';
-
-export enum columns {
-  comment = 'comment',
-  sentiment = 'sentiment',
-  intent = 'intent',
-  username = 'username',
-  offensive = 'offensive',
-}
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-item-table',
   templateUrl: './item-table.component.html',
-  styleUrls: ['./item-table.component.css'],
+  styleUrls: ['./item-table.component.css']
 })
-
-/**
- * @title Table dynamically changing the columns displayed
- */
 export class ItemTableComponent implements OnInit {
-  constructor(private dataService: DataService) {}
+  tableDataSource: any;
+  originalDataSource: any;
+  // customers: any[];
 
-  displayedColumns: string[] = [
-    columns.username,
-    columns.comment,
-    columns.sentiment,
-    columns.intent,
-    columns.offensive,
-  ];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
-  //data: any = ELEMENT_DATA;
-  columns = columns;
-  dataSource = new MatTableDataSource();
+  // representatives: any[];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  // statuses: any[];
+  rowsPerPageOption: number[] = [10,25,50];
+  rows: number = this.rowsPerPageOption[0];
+  first: number = 0;
+  totalRecords: number = 0;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  loading: boolean = true;
 
-  ngOnInit(): void {
-  //   this.dataService.getComments(1, 10).subscribe({
-  //     next: (data) => {
-  //     //this.data = data;
-  //     this.dataSource.data = data as any[];
-  //     console.log(data);
-  //   },
-  //   error: error => {
-  //     console.log(error);
-  //   }
-  // });
-  }
+  activityValues: number[] = [0, 100];
 
-  addColumn() {
-    const randomColumn = Math.floor(
-      Math.random() * this.displayedColumns.length
-    );
-    this.columnsToDisplay.push(this.displayedColumns[randomColumn]);
-  }
+  SENTIMENTS = ['Positive', 'Negative', 'Neutral'];
 
-  removeColumn() {
-    if (this.columnsToDisplay.length) {
-      this.columnsToDisplay.pop();
+  constructor(
+    private dataService: DataService,
+    private notificationService: NotificationService) { }
+
+  ngOnInit() {
+    const getCommentsRequest: IGetCommentsRequest = {
+      recordsPerPage: this.rows,
+      pageNumber: 1,
+      columnFilters: [],
     }
+    this.getComments(getCommentsRequest);
   }
 
-  shuffle() {
-    let currentIndex = this.columnsToDisplay.length;
-    while (0 !== currentIndex) {
-      let randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+  log(val) {
+    console.log(val)
+  }
 
-      // Swap
-      let temp = this.columnsToDisplay[currentIndex];
-      this.columnsToDisplay[currentIndex] = this.columnsToDisplay[randomIndex];
-      this.columnsToDisplay[randomIndex] = temp;
+  onImgError(event) { 
+    event.target.src = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
+  }
+
+  onLazyLoad(event) {
+    this.rows = event["rows"];
+    this.first = event["first"];
+    const getCommentsRequest: IGetCommentsRequest = {
+      recordsPerPage: this.rows,
+      pageNumber: 1 + this.first/this.rows,
+      columnFilters: Object.keys(event["filters"]).map(k => ({field: k, values: event["filters"][k][0]["value"]}))
     }
+    this.getComments(getCommentsRequest);
   }
 
-  announceSortChange(sortState: any) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    // if (sortState.direction) {
-    //   this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    // } else {
-    //   this._liveAnnouncer.announce('Sorting cleared');
-    // }
+  getComments(getCommentsRequest: IGetCommentsRequest) {
+    this.dataService.getComments(getCommentsRequest).subscribe({
+      next: (data) => {
+        data["comments"].map(c => {
+          c["Intent"] = this.formatStringToFirstLetterCaps(c["Intent"]);
+          c["Sentiment"] = this.formatStringToFirstLetterCaps(c["Sentiment"]);
+          c["Offensive"] = this.formatStringToFirstLetterCaps(c["Offensive"]);
+        })
+        this.originalDataSource = data['comments'] as any[];
+        this.totalRecords = data["totalCount"];
+        this.tableDataSource = this.originalDataSource;
+      },
+      error: error => {
+        this.notificationService.notify('error', error.error.message);
+        console.log(error);
+      }
+    });
   }
+
+  formatStringToFirstLetterCaps(val: string) {
+    let stringArr = val.split("_");
+    stringArr = stringArr.map(str => {
+      if(str && str.length > 0) {
+        str = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+      }
+      return str;
+    })
+    return stringArr.join(" ");
+  }
+
 }

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { ItemDashboardComponent } from './itemDetails/item-dashboard/item-dashboard.component';
-import { ItemTableContentComponent } from './itemDetails/item-table-content/item-table-content.component';
+import { ItemTableComponent } from './itemDetails/item-table/item-table.component';
 import { ItemSummaryComponent } from './itemDetails/item-summary/item-summary.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './homepage/home/home.component';
@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'item-dashboard', component: ItemDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'comments', component: ItemTableContentComponent, canActivate: [AuthGuard] },
+  { path: 'comments', component: ItemTableComponent, canActivate: [AuthGuard] },
   { path: 'summary', component: ItemSummaryComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
