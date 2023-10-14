@@ -53,13 +53,18 @@ export class DataService {
       return of(this.userVideoList);
     }
     return this.http.get(this.baseUrl + "/data/getUserVideos", { withCredentials: true }).pipe(map(x => {
-      this.userVideoList = x["data"];
+      this.userVideoList = x["data"]?.reverse();
       return this.userVideoList;
     }));
   }
 
   processVideo(videoUrl: string) {
     return this.http.post(this.baseUrl + "/data/processVideo", {videoUrl: videoUrl}, { withCredentials: true }).pipe(map(x => x["data"]));
+  }
+
+  getVideoDetails(videoId: string) {
+    const params = {'videoId': videoId};
+    return this.http.get(this.baseUrl + "/data/getVideoDetails", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   getSummary() {

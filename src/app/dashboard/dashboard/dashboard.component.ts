@@ -40,13 +40,23 @@ export class DashboardComponent implements OnInit {
     // this.showSpinner = true;
     this.dataService.processVideo(form.value["videoUrl"]).subscribe({
       next: (data) => {
-        this.notificationService.notify('info', typeof data === 'string' ? data : 'AI is working on your analysis!');
-        console.log("data: ", data);
+        this.notificationService.notify('info', typeof data === 'string' ? data : 'We are processing your video, please come back in a while!');
       },
       error: (err) => {
         console.log("error: ", err);
         this.notificationService.notify('error', err.error.message);
       },
+    })
+  }
+
+  checkVideoStatus(videoId: string) {
+    this.dataService.getVideoDetails(videoId).subscribe({
+      next: (data) => {
+        console.log("videoStatus: ", data);
+      },
+      error: (err) => {
+        console.log("videoStatusError: ", err);
+      }
     })
   }
 
