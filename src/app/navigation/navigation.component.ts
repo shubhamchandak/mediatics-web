@@ -154,4 +154,8 @@ export class NavigationComponent implements OnInit{
     this.router.navigate(['/']);
     this.notificationService.notify('info', 'Successfully logged out')
   }
+
+  login(): void {
+    this.router.navigate(['login']);
+  }
 }

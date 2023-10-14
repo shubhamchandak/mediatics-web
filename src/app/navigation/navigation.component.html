@@ -11,7 +11,7 @@
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <asl-google-signin-button *ngIf="!isLoggedIn()" type="standard" size='medium' logo_alignment="center" class="custom-menu-item"></asl-google-signin-button>
+    <button *ngIf="!isLoggedIn()" mat-menu-item (click)="login()">Login/SignUp</button>
     <button *ngIf="isLoggedIn()" mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
 </mat-toolbar>
