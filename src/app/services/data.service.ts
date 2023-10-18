@@ -44,10 +44,6 @@ export class DataService {
     return this.http.post(this.baseUrl + "/data/getComments", body, {withCredentials: true}).pipe(map(x => x["data"]));
   }
 
-  getItemDashboardData() {
-    return this.http.get(this.baseUrl + "/getItemDashboardData");
-  }
-
   getUserVideos(): Observable<IVideoDetails[]> {
     if(this.userVideoList) {
       return of(this.userVideoList);
@@ -70,6 +66,10 @@ export class DataService {
   getSummary() {
     const params = {'videoId': this.getloadedVideo().videoId};
     return this.http.get(this.baseUrl + "/data/getSummary", { params: params, withCredentials: true }).pipe(map(x => x["data"]));
+  }
+
+  getPendingVideoIds() {
+    return this.http.get(this.baseUrl + "/data/getPendingVideoIds", { withCredentials: true }).pipe(map(x => x["data"]));
   }
 
   getUserDetails() {

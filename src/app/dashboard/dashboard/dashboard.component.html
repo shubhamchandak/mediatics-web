@@ -4,7 +4,7 @@
         <input type="text" 
         required 
         name="videoUrl" 
-        pattern="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?" 
+        pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|live\/|v\/)?)([\w\-]+)(\S+)?$" 
         class="searchTerm" 
         placeholder="Input Youtube video URL and hit Search!" 
         ngModel>
@@ -23,12 +23,13 @@
             <img mat-card-image src="https://img.youtube.com/vi/{{ videoDetail.videoId }}/mqdefault.jpg">
           </div>
           <div class="title-container">
-            <mat-card-title class="text-oneline">{{ videoDetail.title }}</mat-card-title>
+            <mat-card-title class="text-oneline" [matTooltip]="videoDetail.title || ''">{{ videoDetail.title || "" }}</mat-card-title>
             <mat-card-actions>
-                <button mat-button matTooltip="Dashboard" (click)="dashboardClick(videoDetail)"><fa-icon [icon]="faChartLine" style="font-size:2em; color: #034875;"></fa-icon></button>
-                <button mat-button matTooltip="Filters" (click)="commentsClick(videoDetail)"><fa-icon [icon]="faTable" style="font-size:2em; color: #673ab7;"></fa-icon></button>
-                <button mat-button matTooltip="AI Summary" (click)="summaryClick(videoDetail)"><fa-icon [icon]="faLightbulb" style="font-size:2em; color: #f8b809;"></fa-icon></button>
-                <button mat-button matTooltip="Download"><fa-icon [icon]="faDownload" style="font-size:2em; color: #141418;"></fa-icon></button>
+                <button mat-button matTooltip="Dashboard" (click)="dashboardClick(videoDetail)" *ngIf="videoDetail.video_data_status"><fa-icon [icon]="faChartLine" class="details-btn"></fa-icon></button>
+                <button mat-button matTooltip="Filters" (click)="commentsClick(videoDetail)"  *ngIf="videoDetail.video_data_status"><fa-icon [icon]="faTable" class="filter-btn"></fa-icon></button>
+                <button mat-button matTooltip="AI Summary" (click)="summaryClick(videoDetail)" *ngIf="videoDetail.summary_status"><fa-icon [icon]="faLightbulb" class="summary-btn"></fa-icon></button>
+                <span *ngIf="!videoDetail.summary_status" class="video-spinner"><fa-icon [icon]="faSpinner" [spin]="true"></fa-icon> Processing </span>
+                <!-- <button mat-button matTooltip="Download"><fa-icon [icon]="faDownload" style="font-size:2em; color: #141418;"></fa-icon></button> -->
             </mat-card-actions>
           </div>
         </mat-card-content>
