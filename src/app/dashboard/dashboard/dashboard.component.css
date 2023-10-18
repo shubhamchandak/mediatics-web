@@ -119,7 +119,7 @@ img {
 /* Media query for screens with a maximum width of 600px (typical for mobile devices) */
 @media screen and (max-width: 600px) {
   .video-details-card {
-    width: 90%; /* Adjust the width as needed for your layout */
+    width: 100%; /* Adjust the width as needed for your layout */
   }
 
   .text-oneline {

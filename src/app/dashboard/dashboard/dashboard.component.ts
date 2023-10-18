@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
         const index = this.userVideos.findIndex(x => x.videoId == videoId);
         this.userVideos[index] = data;
         if(data?.summary_status) {
-          this.notificationService.notify('success', "Your request has been processed");
+          this.notificationService.notify('info', "Your request has been processed");
           clearInterval(this.pendingVideoChecker[videoId]);
         }
         console.log("videoStatus: ", data);
